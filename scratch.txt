@@ -1,7 +1,0 @@
-11/11 Can connect with coinomi mobile wallet. Argent throws an error(cannot read property .enable of undefined) but was working yesterday.
-- Argent connects upon testing a second time.
--MetaMask connects from mobile
-
-11/13 can connect and see FARM balance with argent wallet, but unable to stake.
--
-

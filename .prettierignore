@@ -1,9 +1,0 @@
-# Ignore artifacts:
-coverage
-node_modules
-dist
-.history
-build
-
-# Ignore all HTML files:
-*.html
