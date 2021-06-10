@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: artiomtr/jest-coverage-report-action@v1.3
+      - name: Insgtall modules
+        run: npm i
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          test_script: npm i && npm run test:coverage
+          test_script: npm run test:coverage
