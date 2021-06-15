@@ -4,7 +4,7 @@
 
 ## Setup
 
-`$ npm install`
+`$ npm install `
 
 ## Tracking an address and logging to disk
 
