@@ -16,7 +16,7 @@ import {
   Flash,
   AccordionToggle,
 } from './FarmingTableStyles'
-import FarmTableSkeleton from './FarmTableSkeleton'
+import { FarmTableSkeleton } from './FarmTableSkeleton'
 import { TooltipCustom } from '../Tooltip'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
@@ -70,10 +70,10 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
   const [accordion, setAccordion] = useState<string[]>([])
 
   const toggleAccordion = (id: string) => {
-    if (accordion.includes(id)) {
-      setAccordion(accordion.filter((item) => item !== id))
+    if (accordion.includes(id.toLowerCase())) {
+      setAccordion(accordion.filter((item) => item !== id.toLowerCase()))
     } else {
-      setAccordion([...accordion, id])
+      setAccordion([...accordion, id.toLowerCase()])
     }
   }
 
@@ -94,7 +94,11 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       : '-'
 
     const prettyValue: string = asset.value
-      ? prettyCurrency(asset.value, displayCurrency, currentExchangeRate)
+      ? prettyCurrency(
+          asset.value.toNumber(),
+          displayCurrency,
+          currentExchangeRate,
+        )
       : '-'
 
     const prettyUnstakedBalance: string = asset.unstakedBalance
@@ -105,20 +109,16 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       ? `${asset.percentOfPool.toFixed(6)}%`
       : '-'
 
+    const isOpen = accordion.includes(asset.id.toLowerCase())
+
     return (
-      <>
-        <MainTableRow
-          key={asset.address.pool || asset.address.vault}
-          open={accordion.includes(asset.name)}
-          onClick={() => {
-            toggleAccordion(asset.name)
-          }}
-        >
+      <div key={asset.id}>
+        <MainTableRow open={isOpen} onClick={() => toggleAccordion(asset.id)}>
           <TooltipCustom
             activator={
               <div title={asset.earnFarm ? 'Earn FARM: true' : undefined}>
                 <VaultIcon vaultName={asset.name} />
-                {asset.name}
+                {asset.prettyName}{' '}
                 {asset.earnFarm && <Flash src={flashSvg} alt="" />}
               </div>
             }
@@ -133,6 +133,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
                   color: '#000',
                   fontWeight: 700,
                 }}
+                rel="noreferrer"
               >
                 {asset.address.pool &&
                   ` ${asset.address.pool.slice(
@@ -151,6 +152,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
                   color: '#000',
                   fontWeight: 700,
                 }}
+                rel="noreferrer"
               >
                 {asset.address.vault &&
                   ` ${asset.address.vault.slice(
@@ -165,20 +167,19 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
           <div tabIndex={0}>{prettyFarmToClaim}</div>
           <div>{persentOfPool}</div>
           <div>{prettyValue}</div>
-          <AccordionToggle open={accordion.includes(asset.name)}>
+          <AccordionToggle open={isOpen}>
             {' '}
             <i></i>
           </AccordionToggle>
         </MainTableRow>
-        <AccordionRow open={accordion.includes(asset.name)}>
+        <AccordionRow open={isOpen}>
           <div>Staked Asset: {prettyStakedBalance}</div>
           <div>Underlying balance: {prettyUnderlyingBalance}</div>
           <div>Unstaked: {prettyUnstakedBalance}</div>
         </AccordionRow>
-      </>
+      </div>
     )
   })
-
   return (
     <>
       {display && (
