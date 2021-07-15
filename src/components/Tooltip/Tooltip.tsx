@@ -13,7 +13,7 @@ interface IProps {
   activator: JSX.Element
 }
 
-export const TooltipCustom: React.FC<IProps> = observer((props) => {
+export const ToolTip: React.FC<IProps> = observer((props) => {
   const [hidden, setHidden] = useState(true)
   const [position, setPosition] = useState([0, 0])
   const tooltipRef = useRef(null)
@@ -24,7 +24,7 @@ export const TooltipCustom: React.FC<IProps> = observer((props) => {
         onMouseEnter={() => {
           setHidden(false)
           setPosition([
-            Number(tooltipRef.current?.offsetHeight),
+            Number(tooltipRef.current?.offsetHeight) * 1.5,
             Number(tooltipRef.current?.offsetLeft),
           ])
         }}
