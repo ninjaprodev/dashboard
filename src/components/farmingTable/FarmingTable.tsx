@@ -17,7 +17,7 @@ import {
   AccordionToggle,
 } from './FarmingTableStyles'
 import FarmTableSkeleton from './FarmTableSkeleton'
-import { TooltipCustom } from '../Tooltip'
+import { ToolTip } from '../Tooltip'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
 import flashSvg from '@/assets/flash.svg'
@@ -114,7 +114,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
             toggleAccordion(asset.name)
           }}
         >
-          <TooltipCustom
+          <ToolTip
             activator={
               <div title={asset.earnFarm ? 'Earn FARM: true' : undefined}>
                 <VaultIcon vaultName={asset.name} />
@@ -159,7 +159,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
                   )}...${asset.address.vault.slice(-4)}`}
               </a>
             </p>
-          </TooltipCustom>
+          </ToolTip>
 
           {/* <div className="active">{asset.earnFarm.toString()}</div> */}
           <div tabIndex={0}>{prettyFarmToClaim}</div>
